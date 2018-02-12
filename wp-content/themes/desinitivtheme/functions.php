@@ -1,6 +1,9 @@
 <?php
     // Did not work for me :(
 
+
+
+
     function load_css_js() {
         wp_enqueue_style( 'desinivitStyle', get_template_directory_uri() . '/css/style.css');
 

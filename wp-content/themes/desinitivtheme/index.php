@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-<body>
     <div class="container">
             <div class="hero">
                 <div class="layer layer-bg" data-type="parallax" data-depth="0.10"></div>
@@ -7,11 +6,33 @@
                 <div class="layer layer-overlay" data-type="parallax" data-depth="0.40"></div>
             </div>
             <div class="content layer layer-content" data-type="parallax" data-depth="0.10">
-                <? include (get_template_directory().'/template-parts/desinitiv-content.php'); ?>
-				<? include (get_template_directory().'/template-parts/desinitiv-content.php'); ?>
-				<? include (get_template_directory().'/template-parts/desinitiv-content.php'); ?>
-				<? include (get_template_directory().'/template-parts/desinitiv-content.php'); ?>
+                <?php
+                if ( have_posts() ) :
+
+                    /* Start the Loop */
+                    while ( have_posts() ) : the_post();
+
+                        /*
+                        * Include the Post-Format-specific template for the content.
+                        * If you want to override this in a child theme, then include a file
+                        * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+                        */
+                        get_template_part( 'template-parts/post/content', get_post_format() );
+
+                    endwhile;
+
+                    // the_posts_pagination( array(
+                    //     'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
+                    //     'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
+                    //     'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
+                    // ) );
+
+                else :
+
+                    get_template_part( 'template-parts/post/content', 'none' );
+
+                endif;
+                ?>
             </div>
     </div><!-- #container -->
-</body>
 <?php get_footer(); ?>
