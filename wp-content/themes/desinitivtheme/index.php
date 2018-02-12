@@ -5,33 +5,38 @@
                 <div class="layer layer-01" data-type="parallax" data-depth="0.20"></div>
                 <div class="layer layer-overlay" data-type="parallax" data-depth="0.40"></div>
             </div>
-            <div class="content layer layer-content" data-type="parallax" data-depth="0.10">
+            <div class="content layer layer-content" data-type="parallax" data-depth="0.05">
                 <?php
-                if ( have_posts() ) :
 
-                    /* Start the Loop */
-                    while ( have_posts() ) : the_post();
 
-                        /*
-                        * Include the Post-Format-specific template for the content.
-                        * If you want to override this in a child theme, then include a file
-                        * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-                        */
-                        get_template_part( 'template-parts/post/content', get_post_format() );
+                // Loop through all available Pages and display Content correspondently
+                $pages = get_pages();
 
-                    endwhile;
+                $pictureIndex = 1;
+                $float = "left";
 
-                    // the_posts_pagination( array(
-                    //     'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
-                    //     'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
-                    //     'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
-                    // ) );
+                // var_dump(array_values($pages)[0]);
+                foreach($pages as $page) {
 
-                else :
+                    echo('<div class="pageContentPart">' );
+                    $pictureIndex += 1;
+                    if($pictureIndex>3) $pictureIndex=1;
+                    
+                    echo('<img class="pageContentBackgroundImage '.$float.'" src="/wp-content/themes/desinitivtheme/img/contentPagePartImage'.$pictureIndex.'.png">' );    
+                    
+                    echo('<div class="pageText'.$float.'">' );
+                        echo('<h1 class="">'.$page->post_title.'</h1>');
+                        echo('<p class="">'.$page->post_content.'</p>');
+                    echo('</div>' );
 
-                    get_template_part( 'template-parts/post/content', 'none' );
+                    echo('</div>' );
 
-                endif;
+                    if ($float=="left") $float="right";
+                    else $float="left";
+                }
+
+
+                
                 ?>
             </div>
     </div><!-- #container -->
